@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import ClaimList from "./pages/claims";
-import Policies from "./pages/policies";
+import ClaimList from "./pages/Claims";
+import Policies from "./pages/Policies";
 import CreateClaim from "./pages/CreateClaim";
 
 function App() {
