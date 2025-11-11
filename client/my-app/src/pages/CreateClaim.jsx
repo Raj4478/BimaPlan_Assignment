@@ -3,6 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/CreateClaim.css";
 
+
+const API_BASE_URL = import.meta.env.MODE === 'development' 
+  ? '/api' 
+  : (import.meta.env.VITE_API_BASE_URL || '/api');
+
 const CreateClaim = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -84,7 +89,6 @@ const CreateClaim = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    
     Object.keys(validationPatterns).forEach((field) => {
       const error = validateField(field, formData[field]);
       if (error) {
@@ -103,14 +107,12 @@ const CreateClaim = () => {
       newErrors.claimReason = "Claim reason is required";
     }
 
- 
     const claimAmountNum = parseFloat(formData.claimAmount);
     if (isNaN(claimAmountNum) || claimAmountNum <= 0) {
       newErrors.claimAmount =
         "Claim amount must be a positive number greater than 0";
     }
 
-   
     const reasonLength = formData.claimReason.trim().length;
     if (reasonLength > 0 && (reasonLength < 10 || reasonLength > 500)) {
       newErrors.claimReason =
@@ -143,7 +145,7 @@ const CreateClaim = () => {
       console.log("Submitting claim data:", claimData);
 
       const response = await axios.post(
-        "http://localhost:8000/api/claims",
+        `${API_BASE_URL}/claims`,
         claimData
       );
 

@@ -1,4 +1,4 @@
-// API configuration for different environments
+
 const API_CONFIG = {
   development: {
     baseURL: 'http://localhost:8000/api'
@@ -11,7 +11,7 @@ const API_CONFIG = {
 const currentEnv = import.meta.env.MODE || 'development';
 export const API_BASE_URL = API_CONFIG[currentEnv].baseURL;
 
-// Default axios configuration
+
 export const axiosConfig = {
   baseURL: API_BASE_URL,
   timeout: 10000,

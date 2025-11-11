@@ -3,6 +3,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../styles/policies.css";
 
+
+const API_BASE_URL = import.meta.env.MODE === 'development' 
+  ? '/api' 
+  : (import.meta.env.VITE_API_BASE_URL || '/api');
+
 const Policies = () => {
   const [policies, setPolicies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +16,7 @@ const Policies = () => {
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/policies");
+        const res = await axios.get(`${API_BASE_URL}/policies`);
         setPolicies(res.data);
       } catch (error) {
         setError(error.message);

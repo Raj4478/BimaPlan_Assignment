@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../styles/Claims.css";
+
+const API_BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "/api"
+    : import.meta.env.VITE_API_BASE_URL || "/api";
+
 const ClaimList = () => {
   const [claims, setClaims] = useState([]);
   const [error, setError] = useState(null);
@@ -11,7 +17,7 @@ const ClaimList = () => {
   useEffect(() => {
     const fetchClaims = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/claims");
+        const response = await axios.get(`${API_BASE_URL}/claims`);
         setClaims(response.data);
       } catch (error) {
         console.error(error);
@@ -27,7 +33,7 @@ const ClaimList = () => {
     try {
       setUpdatingClaim(claimId);
       const response = await axios.patch(
-        `http://localhost:8000/api/claims/${claimId}/status`,
+        `${API_BASE_URL}/claims/${claimId}/status`,
         {
           status: newStatus,
         }
